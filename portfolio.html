@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenni Juola - Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 0 2rem;
+        }
+
+        .hero-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .name {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .title {
+            font-size: 1.8rem;
+            color: #666;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            background: rgba(102, 126, 234, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .skill-category h4 {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-category p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .work-item {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .work-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .work-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .work-position {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-company {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .work-date {
+            color: #666;
+            font-weight: 500;
+            font-size: 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .work-description {
+            color: #666;
+            line-height: 1.7;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .work-technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .project {
+            background: rgba(118, 75, 162, 0.05);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #764ba2;
+            transition: all 0.3s ease;
+        }
+
+        .project:hover {
+            background: rgba(118, 75, 162, 0.1);
+            transform: translateX(10px);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #666;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .contact {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 4rem 3rem;
+        }
+
+        .contact-title {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .contact-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1.2rem 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .work-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .work-date {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.95);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                backdrop-filter: blur(10px);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero-content {
+                padding: 3rem 2rem;
+            }
+            
+            .name {
+                font-size: 2.5rem;
+            }
+
+            .title {
+                font-size: 1.4rem;
+            }
+
+            .intro {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#work" class="nav-link">Work</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero/About Section -->
+    <section id="about" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="name">Lenni Juola</h1>
+                <p class="title">Software Developer</p>
+                <p class="intro">
+                I’m a developer passionate about building intelligent and interactive applications using Python. I enjoy exploring a variety of projects, from creating Discord bots to experimenting with machine learning models for fun and learning.
+                <br>
+                <br>
+                I am currently studying Software Development at OSAO.
+                <br>
+                <br>
+                <a href="#skills" class="cta-button">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Programming Languages</h4>
+                    <p>In my studies, I have worked with JavaScript, HTML, and CSS, building web-related projects. I’ve also learned Python both at school and through personal projects. Additionally, I have some experience with C and C#, as well as basic knowledge of MySQL and PHP from coursework.</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Frameworks & Tools</h4>
+                    <p>Familiar with Arduino, Node-RED, and Raspberry Pi. I have used both Linux and Linux server environments, as well as Windows and Windows servers.</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Development & Deployment</h4>
+                    <p>I have hands-on experience deploying applications on Linux servers. I use Docker for containerization to simplify and streamline deployments. I’ve also developed embedded systems on Raspberry Pi and Arduino.</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Specialized Technologies</h4>
+                    <p>Skilled in building Discord bots using discord.py, and familiar with basic machine learning workflows in Python. Comfortable working with APIs such as OpenWeatherMap, and experienced in handling JSON data and image preprocessing for AI models.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Section -->
+        <section id="work" class="section">
+            <h2 class="section-title">Work Experience</h2>
+            
+            <div class="work-item">
+                <div class="work-header">
+                    <div>
+                        <h3 class="work-position">Software Developer Intern</h3>
+                        <div class="work-company">Skyled Finland OY</div>
+                    </div>
+                    <div class="work-date">Jan 2024 - Apr 2024</div>
+                </div>
+                <p class="work-description">
+Built full-stack web applications using React and GatsbyJS on the frontend, with TypeScript and NestJS on the backend. Used Docker to deploy scalable, containerized solutions. Gained practical experience in modern web development and deployment workflows.                <div class="work-technologies">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">GatsbyJS</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">NestJS</span>
+                    <span class="tech-tag">Docker</span>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <h2 class="section-title">Projects</h2>
+            
+            <div class="project">
+                <h3 class="project-title">Dropmap prediction tool</h3>
+                <p class="project-description">
+                A personal project where I developed a machine learning tool that predicts optimal drop locations in a game map based on historical player data. While originally inspired by game scenarios, the project focuses on geospatial data analysis and AI-based decision-making.
+                <br>
+                <br>
+                I built a convolutional neural network (CNN) using TensorFlow and Keras to predict multiple (x, y) coordinates on a map image. The model was trained on custom image data paired with manually annotated locations stored in JSON format. Images were preprocessed and normalized, and predictions were visualized by overlaying the output coordinates on resized map images.                </p>
+            </div>
+
+            <div class="project">
+                <h3 class="project-title">Custom Discord Bot</h3>
+                <p class="project-description">
+                A lightweight yet versatile Discord bot built with Python using the discord.py library. This bot was developed to enhance engagement and moderation capabilities in a private community server.
+                <br>
+                <br>
+                Key features include moderation commands, along with dynamic role assignment featuring color customization. It also includes utility tools like real-time weather lookup using the OpenWeatherMap API. Additionally, the bot supports fun interactions including image and GIF responses, personalized command sets, and randomized joke replies.                </p>
+            </div>
+
+
+            <div class="project">
+    <h3 class="project-title">Upcoming Projects</h3>
+    <p class="project-description">
+New ideas are in progress and will be added soon. Stay tuned for future updates!    </p>
+</div>
+</section> <!-- Closing the Projects section properly -->
+
+<section id="contact" class="section contact">
+
+            <h2 class="contact-title">Let's Connect</h2>
+            <p class="contact-subtitle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Let's discuss how we can create something amazing together!
+            </p>
+            <div class="contact-info">
+                <div class="contact-item">linkedin.com/in/lenni-juola</div>
+                <div class="contact-item">juola.lenni@email.com</div>
+            </div>
+            <div class="status-badge">Open to Work</div>
+        </section>
+    </div>
